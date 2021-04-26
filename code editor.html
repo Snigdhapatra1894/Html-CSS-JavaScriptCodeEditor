@@ -1,0 +1,82 @@
+<html>
+
+<head>
+    <title>code editor</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="menu">
+
+        <div id="logo">
+            Code Editor
+        </div>
+        <div id="buttonContainer">
+            <div class="toggleButton active" id="html">
+                HTML
+            </div>
+
+            <div class="toggleButton" id="css">
+                CSS
+            </div>
+
+            <div class="toggleButton" id="javascript">
+                JavaScript
+            </div>
+
+            <div class="toggleButton active" id="output">
+                Output
+            </div>
+
+        </div>
+    </div>
+
+    <div id="bodyContainer">
+        <textarea id="htmlEditor" class="editor"><p id="demo">Hello World !</p></textarea>
+        <textarea id="cssEditor" class="editor hidden">p { color: red; }</textarea>
+        <textarea id="javascriptEditor" class="editor hidden">document.getElementById("demo").innerHTML = "Paragraph has changed!";</textarea>
+        <iframe id="outputEditor" class="editor"> </iframe>
+
+    </div>
+
+
+    <script type="text/javascript">
+        $(".toggleButton").hover(function() {
+            $(this).addClass("highlightedButton");
+        }, function() {
+            $(this).removeClass("highlightedButton");
+        });
+
+        $(".toggleButton").click(function() {
+            $(this).toggleClass("active");
+            $(this).removeClass("highlightedButton");
+            var editorId = $(this).attr("id") + "Editor";
+            $("#" + editorId).toggleClass("hidden");
+
+            var f = 4 - $("hidden").length; // this variable counts the number of editors active
+            $(".editor").width(($(window).width() / f) - 5);
+        });
+
+        $(".editor").height($(window).height() - $("#menu").height() - 15);
+        $(".editor").width(($(window).width() / 2) - 5);
+
+        function editcode() {
+            $("iframe").contents().find("html").html("<html><head><style type='text/css'>" + $("#cssEditor").val() +
+                "</style></head><body>" + $("#htmlEditor").val() + "</body></html>");
+
+            document.getElementById("outputEditor").contentWindow.eval($("#javascriptEditor").val());
+
+
+        }
+
+        editcode();
+
+        $("textarea").on('change keyup paste', function() {
+            editcode();
+
+        });
+    </script>
+</body>
+
+</html>
