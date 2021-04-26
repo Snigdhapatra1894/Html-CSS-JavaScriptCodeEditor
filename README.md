@@ -1,6 +1,6 @@
 # Html-CSS-JavaScript Code Editor
 
-This code editor helps users to write HTML , CSS , JavaScript Code Side by side . 
+This code editor helps users to write HTML , CSS , JavaScript codes Side by side . 
  
  ##Screenshots -:
 
